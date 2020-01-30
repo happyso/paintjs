@@ -1,6 +1,13 @@
 
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext('2d');
+const colors = document.getElementsByClassName('jsColor');
+const range = document.getElementById("jsRange");
+
+//getElementGetByID js range
+//handleRangeChange
+//if range range add event input  -> handleRangeChange
+//
 
 canvas.width = 700;
 canvas.height = 700;
@@ -8,6 +15,13 @@ canvas.height = 700;
 ctx.strokeStyle = "#2c2c2c";
 ctx.lineWidth = 2.5;
 
+
+
+
+function handleColorClick (event) {
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+}
 let painting = false;
 
 function startPainting () {
@@ -38,10 +52,24 @@ function onMouseUp(){
     stopPainting();
 }
 
+
 canvas.addEventListener('mousedown', startPainting);
 canvas.addEventListener('mousemove', onMouseMove);
 canvas.addEventListener('mouseup', stopPainting);
 canvas.addEventListener('mouseleave', stopPainting);
+
+if (range){
+    range.addEventListener("input", handleRangeChange);
+}
+
+Array.from(colors).forEach((color)=>{
+    color.addEventListener("click", handleColorClick);
+});
+
+function handleRangeChange(event) {
+    const strokeSize = event.target.value;
+    ctx.lineWidth = strokeSize;
+}
 
 
 //캔버스 컨텍스트 생성해주고 2d로
